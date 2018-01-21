@@ -13,16 +13,16 @@ $this->title = Yii::$app->params['title'];
     <div class="panel-heading"><h2><?= $this->title ?></h2></div>
     <div class="panel-body">
         <div class="row">
-            <div class="col-md-5">
-                <!-- Form Block -->
-                <?= $this->render('_conversionForm', ['model' => $conversionForm]) ?>
-            </div>
             <div class="col-md-7">
                 <!-- Result Block -->
                 <div id="conversionResult">
                     <div class="currency"><?= $conversionForm->result['currency'] ?></div>
                     <div class="amount"><?= Yii::$app->formatter->asDecimal($conversionForm->result['amount'], 2) ?></div>
                 </div>
+            </div>
+            <div class="col-md-5">
+                <!-- Form Block -->
+                <?= $this->render('_conversionForm', ['model' => $conversionForm]) ?>
             </div>
         </div>
     </div>
