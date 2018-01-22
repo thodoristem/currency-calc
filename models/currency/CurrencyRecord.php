@@ -31,6 +31,12 @@ class CurrencyRecord extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 64],
             [['code'], 'string', 'max' => 3],
             [['name', 'code'], 'unique'],
+            ['name', 'filter', 'filter' => function ($value) {
+          		return strip_tags($value);
+      		}],
+          	['code', 'filter', 'filter' => function ($value) {
+          		return strtoupper(strip_tags($value));
+      		}],
         ];
     }
 
