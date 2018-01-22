@@ -34,6 +34,9 @@ class ConversionForm extends \yii\base\Model{
      */
     public $result = [];
 
+    /**
+    * Called when the model initiates
+    */
     public function init() {
         $this->result = [
             'amount' => 0.00,
@@ -41,6 +44,9 @@ class ConversionForm extends \yii\base\Model{
         ];
     }
 
+    /**
+    * Validation rules
+    */
     public function rules()
     {
         return [
@@ -72,19 +78,19 @@ class ConversionForm extends \yii\base\Model{
             if ($conversionRatio = ConversionRatioRecord::find()->where([
                 'from' => $this->fromCurrencyId,
                 'to' => $this->toCurrencyId
-            ])->asArray(true)->one()){
+            ])->asArray(true)->one()){ // if this conversion combination exists use the ratio saved in database
                 $ratio = $conversionRatio['ratio'];
             } else if ($conversionRatio = ConversionRatioRecord::find()->where([
                 'from' => $this->toCurrencyId,
                 'to' => $this->fromCurrencyId
-            ])->asArray(true)->one()) {
+            ])->asArray(true)->one()) { // if the reverse conversion combination exists use the the 1 / ratio
                 $ratio = 1 / $conversionRatio['ratio'];
             } else {
                 return false;
             }
             return $this->result = [
-                'amount' => $this->amount * $ratio,
-                'currency' => CurrencyRecord::getCurrencyList($this->toCurrencyId)
+                'amount' => $this->amount * $ratio, // Make the conversion and return the value
+                'currency' => CurrencyRecord::getCurrencyList($this->toCurrencyId) // Return the currency name the value converted to
             ];
         }
     }
