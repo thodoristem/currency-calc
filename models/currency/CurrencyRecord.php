@@ -31,12 +31,14 @@ class CurrencyRecord extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 64],
             [['code'], 'string', 'max' => 3],
             [['name', 'code'], 'unique'],
+
+            // Fix for the js script injection
             ['name', 'filter', 'filter' => function ($value) {
-          		return strip_tags($value);
-      		}],
-          	['code', 'filter', 'filter' => function ($value) {
-          		return strtoupper(strip_tags($value));
-      		}],
+                return strip_tags($value);
+            }],
+            ['code', 'filter', 'filter' => function ($value) {
+                return strtoupper(strip_tags($value));
+            }],
         ];
     }
 
@@ -59,11 +61,12 @@ class CurrencyRecord extends \yii\db\ActiveRecord
      * @param string $show Select to show full name of the currency or the code name only.
      * @return array|mixed
      */
-    public static function getCurrencyList($index = null, $show = 'full'){
+    public static function getCurrencyList($index = null, $show = 'full')
+    {
         $currencies = self::find()->asArray(true)->all();
         $items = [];
-        foreach($currencies as $currency){
-            if ($show == 'full'){
+        foreach ($currencies as $currency) {
+            if ($show == 'full') {
                 $items[$currency['id']] = $currency['code'] . ' - ' . $currency['name'];
             } else if ($show == 'code') {
                 $items[$currency['id']] = $currency['code'];

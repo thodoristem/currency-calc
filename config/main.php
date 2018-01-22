@@ -17,6 +17,9 @@ $config = [
             'cookieValidationKey' => 'key',
         ],
         'db' => require __DIR__ . '/db.php',
+        'assetManager' => [
+            'linkAssets' => true,
+        ],
         'urlManager' => [
             'baseUrl' => $baseUrl,
             'enablePrettyUrl' => true,
@@ -37,7 +40,7 @@ $config = [
 ];
 
 if (YII_ENV_DEV) {
-// configuration adjustments for 'dev' environment
+    // configuration adjustments for 'dev' environment
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
