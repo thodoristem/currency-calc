@@ -45,7 +45,7 @@ class ConversionRatioRecord extends \yii\db\ActiveRecord
                     'from' => $this->to,
                     'to' => $this->from
                 ])->exists();
-                if ($exists) {
+                if ($exists && !$this->id){
                     $this->addError($attribute, Yii::t('app', 'This conversion combination already exists'));
                 }
             }]
